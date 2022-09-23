@@ -13,6 +13,7 @@ from tkinter.filedialog import *
 from pytube import YouTube
 import webbrowser
 from PIL import Image, ImageTk
+import os
 import re
 #const colors
 #------------------------------------------------------------------------------
@@ -24,17 +25,18 @@ bhul_color = "#e84a35"
 semi_prim_color = "#666"
 semi_seco_color = "#095787"
 semi_bhul_color = "#574747"
+assets = os.path.join(os.path.dirname(__file__), "Assets")
 
 root = Tk()
 root.geometry("720x540")
-root.title("YouTube Video Downloader")
-root.iconbitmap(r"E:\Eclipse\python\youtube.ico")
+root.title("MineTube")
+root.iconbitmap(assets+"/youtube.ico")
 root.resizable(False, False)
 
 
-fbimag = Image.open("E:/Eclipse/mYPy/WindowsApp/fb.png").resize((30, 30), Image.Resampling.LANCZOS)
+fbimag = Image.open(assets+"/fb.png").resize((30, 30), Image.Resampling.LANCZOS)
 fbimg = ImageTk.PhotoImage(fbimag)
-ghimag = Image.open("E:/Eclipse/mYPy/WindowsApp/gh.png").resize((30, 30), Image.Resampling.LANCZOS)
+ghimag = Image.open(assets+"/gh.png").resize((30, 30), Image.Resampling.LANCZOS)
 ghimg = ImageTk.PhotoImage(ghimag)
 
 
@@ -44,6 +46,7 @@ ghimg = ImageTk.PhotoImage(ghimag)
 
 link = StringVar()
 path = StringVar()
+progress = StringVar()
 nameText = StringVar(root)
 nameText.set("Video Name : ")
 opt = ["none"]
@@ -101,7 +104,7 @@ def download():
     choice = s.get()
     choice = int(choice[:2].strip())
     paths = path.get()
-    ytube = YouTube(ytubelink).streams
+    ytube = YouTube(ytubelink, on_progress_callback=progress.set('Downloading...'), on_complete_callback=progress.set('Dowload Complete')).streams
     stream = ytube[choice-1]
     stream.download(paths)
     
@@ -109,7 +112,6 @@ def download():
 
 # choice = int(input("Give the Choice"))
 # stream = videos[choice-1]
-# stream.download('C:/Users/SAYAN DEY/Desktop')
 
 # print("downloaded")
 
@@ -169,6 +171,7 @@ Button(dirFrame, text="Browse", height="1", width="8", bg=prim_color, fg="white"
 
 down = Frame(root, height="100", width="720", bg="white")
 down.pack()
+Label(down, textvariable=progress, fg=prim_color, bg="white", height="1", font=("Arial", 20)).pack()
 Label(down ,bg="white", fg="white", font=("Castellar", 20), width="600").pack()
 Button(down, text="Download", bg=bhul_color, height="1", width="20", font=("Arial", 20), command=download).pack(side=BOTTOM)
 
