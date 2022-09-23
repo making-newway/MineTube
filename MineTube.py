@@ -30,13 +30,13 @@ assets = os.path.join(os.path.dirname(__file__), "Assets")
 root = Tk()
 root.geometry("720x540")
 root.title("MineTube")
-root.iconbitmap(assets+"/youtube.ico")
+root.iconbitmap(os.path.join(os.getcwd() , 'Assets\youtube.ico'))
 root.resizable(False, False)
 
 
-fbimag = Image.open(assets+"/fb.png").resize((30, 30), Image.Resampling.LANCZOS)
+fbimag = Image.open(assets + "\fb.png").resize((30, 30), Image.Resampling.LANCZOS)
 fbimg = ImageTk.PhotoImage(fbimag)
-ghimag = Image.open(assets+"/gh.png").resize((30, 30), Image.Resampling.LANCZOS)
+ghimag = Image.open(assets + "\gh.png").resize((30, 30), Image.Resampling.LANCZOS)
 ghimg = ImageTk.PhotoImage(ghimag)
 
 
